@@ -1,4 +1,4 @@
-from utils import feature_extraction, linear_assignment, cluster_acc
+from utilities import feature_extraction, linear_assignment, cluster_acc
 from sklearn.cluster import AgglomerativeClustering, KMeans
 from sklearn.mixture import GaussianMixture
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score

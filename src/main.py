@@ -1,6 +1,6 @@
 import pickle
 
-from utils import get_stats
+from utilities import get_stats
 from prong1 import supervised_classification
 from prong2 import clustering
 from prong3 import host_identification

@@ -1,7 +1,7 @@
 import statistics
 
 from sklearn.model_selection import StratifiedKFold
-from utils import feature_extraction, training, testing
+from utilities import feature_extraction, training, testing
 
 
 def supervised_classification(train, test, k, cross_validation_flag):
