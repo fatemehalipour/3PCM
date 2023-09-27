@@ -7,7 +7,7 @@ from prong3 import host_identification
 
 
 def read_file(file_name):
-    data = pickle.load(open('Data/' + file_name, "rb"))
+    data = pickle.load(open('data/' + file_name, "rb"))
     labels_assignment, data_distribution = get_stats(data, file_name)
     return data
 

@@ -3,7 +3,7 @@ import pandas as pd
 
 def host_identification(test):
     # Read xl file with labels
-    xl_file = pd.ExcelFile('Data/Cleaned Dataset.xlsx')
+    xl_file = pd.ExcelFile('../data/Cleaned Dataset.xlsx')
 
     # extract different sheets in xl file
     dfs = {sheet_name: xl_file.parse(sheet_name)
