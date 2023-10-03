@@ -1,10 +1,8 @@
 # 3PCM
 
-
-3-Pronged Classification Method for Taxonomic Classification of Astrovirus Sequences. All the datasets used in the paper can be found  in <a href="https://github.com/fatemehalipour/3PCM/tree/main/data">data</a> folder.
+This repository contains all the source files and datasets for 3-Pronged Classification Method for Taxonomic Classification of Astrovirus Sequences. All the datasets used in the paper can be found  in <a href="https://github.com/fatemehalipour/3PCM/tree/main/data">data</a> folder.
 The source code of Prong 1 (supervised method), Prong 2 (unsupervised method), and Prong 3 (host identification) can be found in 
 <a href="https://github.com/fatemehalipour/3PCM/tree/main/src">src</a> folder.
----
 
 ## Datasets
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/dataset1.p">Dataset 1</a>: Dataset consisting of all 992 astrovirus sequences used in this study.
