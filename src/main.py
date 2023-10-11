@@ -29,13 +29,18 @@ if __name__ == '__main__':
             ' dataset3_NR.p, Potyvirus.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p) ')
         train = read_file(train_data)
 
+
     # The input should be one of dataset1.p, dataset2.p, dataset2_NR.p, dataset3.p,'
     #         #             ' dataset3_NR.p, Potyvirus.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p
     if train_data == 'Potyvirus.p':
-        test_data = 'Potyvirus.p'
-        print("Potyvirus.p will be used as training and testing dataset")
+        test_data = train_data
+        print(f"{test_data} will be used as training and testing dataset")
+    elif train_data == 'dataset1.p':
+        prong = 'Prong 3'
+        test_data = train_data
+        print("Prong 3 is the only prong applicable on dataset1.p")
     else:
-        test_data = input('Please select the testing dataset (e.g. dataset1.p, dataset2.p, dataset2_NR.p, dataset3.p,'
+        test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
                           ' dataset3_NR.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p) ')
     if test_data == train_data:
         print('You selected the same dataset for training and testing.')
@@ -71,10 +76,9 @@ if __name__ == '__main__':
                 blah, prong3_pred = host_identification(test)
             else:
                 prong3_pred, blah = host_identification(test)
-        print('Prediction of all three prongs:')
+        print('Prediction of all prongs:')
         print(prong1_pred)
         print(prong2_pred)
         if test_data == 'Potyvirus.p':
-            # print("Prong 3 is not applicable on the testing data.")
             exit()
         print(prong3_pred)

@@ -70,6 +70,8 @@ def clustering(train, test, k, level):
                 dict_y_pred[accession_numbers[i]] = 'Avastrovirus'
             if y_pred[i] == 1:
                 dict_y_pred[accession_numbers[i]] = 'Mamastrovirus'
+            # if y_pred[i] == 2:
+            #     dict_y_pred[accession_numbers[i]] = 'Unknown'
     if level == "family":
         for i in range(len(accession_numbers)):
             if y_pred[i] == 0:
