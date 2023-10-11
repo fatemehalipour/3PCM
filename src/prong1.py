@@ -4,7 +4,7 @@ from sklearn.model_selection import StratifiedKFold
 from utilities import feature_extraction, training, testing
 
 
-def supervised_classification(train, test, k, cross_validation_flag):
+def supervised_classification(train, test, k, cross_validation_flag, level):
     print('Prong 1 starting...')
 
     # Select one of '10-nearest-neighbors', 'nearest-centroid-mean', 'nearest-centroid-median', 'logistic-regression',
@@ -25,6 +25,7 @@ def supervised_classification(train, test, k, cross_validation_flag):
             accuracy = testing(X_te, y_te, pipeline)
             accuracies.append(accuracy)
         print('Accuracy (average of 10 different splits) = ' + str(statistics.mean(accuracies)))
+        x_test = x_train
     else:
         x_train, y_train, train_accession_numbers = feature_extraction(train, k)
         x_test, y_test, accession_numbers = feature_extraction(test, k)
@@ -32,15 +33,22 @@ def supervised_classification(train, test, k, cross_validation_flag):
         accuracy = testing(x_test, y_test, pipeline)
         print('Accuracy = ' + str(accuracy))
 
-        y_pred = pipeline.predict(x_test)
+    y_pred = pipeline.predict(x_test)
 
-        dict_y_pred = {}
+    dict_y_pred = {}
+    if level == "genus":
         for i in range(len(accession_numbers)):
             if y_pred[i] == 0:
                 dict_y_pred[accession_numbers[i]] = 'Avastrovirus'
             if y_pred[i] == 1:
                 dict_y_pred[accession_numbers[i]] = 'Mamastrovirus'
-        print('Prong 1 predictions:')
-        print(dict_y_pred)
-        print('--------------------------------------------------')
-        return dict_y_pred
+    if level == "family":
+        for i in range(len(accession_numbers)):
+            if y_pred[i] == 0:
+                dict_y_pred[accession_numbers[i]] = 'Astrovirus'
+            if y_pred[i] == 1:
+                dict_y_pred[accession_numbers[i]] = 'Potyvirus'
+    print('Prong 1 predictions:')
+    print(dict_y_pred)
+    print('--------------------------------------------------')
+    return dict_y_pred

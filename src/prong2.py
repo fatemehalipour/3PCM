@@ -4,7 +4,7 @@ from sklearn.mixture import GaussianMixture
 from sklearn.metrics import adjusted_rand_score, normalized_mutual_info_score, silhouette_score
 
 
-def clustering(train, test, k):
+def clustering(train, test, k, level):
     print('Prong 2 starting...')
 
     # Change number of clusters if necessary
@@ -64,11 +64,18 @@ def clustering(train, test, k):
     for i in range(len(y_pred)):  # we do this for each sample or sample batch
         y_pred[i] = d[y_pred[i]]
     dict_y_pred = {}
-    for i in range(len(accession_numbers)):
-        if y_pred[i] == 0:
-            dict_y_pred[accession_numbers[i]] = 'Avastrovirus'
-        if y_pred[i] == 1:
-            dict_y_pred[accession_numbers[i]] = 'Mamastrovirus'
+    if level == "genus":
+        for i in range(len(accession_numbers)):
+            if y_pred[i] == 0:
+                dict_y_pred[accession_numbers[i]] = 'Avastrovirus'
+            if y_pred[i] == 1:
+                dict_y_pred[accession_numbers[i]] = 'Mamastrovirus'
+    if level == "family":
+        for i in range(len(accession_numbers)):
+            if y_pred[i] == 0:
+                dict_y_pred[accession_numbers[i]] = 'Astrovirus'
+            if y_pred[i] == 1:
+                dict_y_pred[accession_numbers[i]] = 'Potyvirus'
     print('Prong 2 predictions:')
     print(dict_y_pred)
     print('--------------------------------------------------')
