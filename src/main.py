@@ -26,8 +26,7 @@ if __name__ == '__main__':
             'Please select the training dataset (e.g. dataset1.p, dataset2.p, dataset2_NR.p, Potyvirus.p, Mamastrovirus.p, or Avastrovirus.p) ')
         train = read_file(train_data)
 
-
-    if train_data == 'Potyvirus.p':
+    if train_data == 'Potyvirus.p' or train_data == 'Mamastrovirus.p' or train_data == 'Avastrovirus.p':
         test_data = train_data
         print(f"{test_data} will be used as training and testing dataset")
     elif train_data == 'dataset1.p':
@@ -36,10 +35,8 @@ if __name__ == '__main__':
         print("Prong 3 is the only prong applicable on dataset1.p")
     elif train_data == 'dataset2.p' or train_data == 'dataset2_NR.p':
         test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
-                          ' dataset3_NR.p) ')
-    else:
-        test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
-                          ' dataset3_NR.p, Mamastrovirus.p, or Avastrovirus.p) ')
+                          ' dataset3_NR.p)')
+
     if test_data == train_data:
         print('You selected the same dataset for training and testing.')
         test = train
@@ -47,10 +44,15 @@ if __name__ == '__main__':
     else:
         test = read_file(test_data)
 
+    # set the level
     if train_data == "dataset1.p" or train_data == "dataset2.p" or train_data == "dataset2_NR.p" or train_data == "dataset3.p" or train_data == "dataset3_NR.p":
         level = "genus"
-    if train_data == 'Potyvirus.p':
+    elif train_data == 'Potyvirus.p':
         level = "family"
+    elif train_data == 'Mamastrovirus.p':
+        level = 'mamastrovirus'
+    elif train_data == 'Avastrovirus.p':
+        level = 'avastrovirus'
 
     if prong == 'Prong 1':
         supervised_classification(train, test, k, cross_validation_flag, level=level)

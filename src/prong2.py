@@ -78,6 +78,20 @@ def clustering(train, test, k, level):
                 dict_y_pred[accession_numbers[i]] = 'Astrovirus'
             if y_pred[i] == 1:
                 dict_y_pred[accession_numbers[i]] = 'Potyvirus'
+    if level == "mamastrovirus":
+        for i in range(len(accession_numbers)):
+            if y_pred[i] == 0:
+                dict_y_pred[accession_numbers[i]] = 'HAstV'
+            if y_pred[i] == 1:
+                dict_y_pred[accession_numbers[i]] = 'Non-HAstV Mamastrovirus'
+
+    if level == "avastrovirus":
+        for i in range(len(accession_numbers)):
+            if y_pred[i] == 0:
+                dict_y_pred[accession_numbers[i]] = 'GoAstV'
+            if y_pred[i] == 1:
+                dict_y_pred[accession_numbers[i]] = 'Non-GoAstV Avastrovirus'
+
     print('Prong 2 predictions:')
     print(dict_y_pred)
     print('--------------------------------------------------')
