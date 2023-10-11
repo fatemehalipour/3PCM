@@ -22,16 +22,11 @@ if __name__ == '__main__':
 
     train_data = train = test = None
     if prong != 'Prong 3':
-        # The input should be one of dataset1.p, dataset2.p, dataset2_NR.p, dataset3.p,'
-        #             ' dataset3_NR.p, Potyvirus.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p
         train_data = input(
-            'Please select the training dataset (e.g. dataset1.p, dataset2.p, dataset2_NR.p, dataset3.p,'
-            ' dataset3_NR.p, Potyvirus.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p) ')
+            'Please select the training dataset (e.g. dataset1.p, dataset2.p, dataset2_NR.p, Potyvirus.p, Mamastrovirus.p, or Avastrovirus.p) ')
         train = read_file(train_data)
 
 
-    # The input should be one of dataset1.p, dataset2.p, dataset2_NR.p, dataset3.p,'
-    #         #             ' dataset3_NR.p, Potyvirus.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p
     if train_data == 'Potyvirus.p':
         test_data = train_data
         print(f"{test_data} will be used as training and testing dataset")
@@ -39,9 +34,12 @@ if __name__ == '__main__':
         prong = 'Prong 3'
         test_data = train_data
         print("Prong 3 is the only prong applicable on dataset1.p")
+    elif train_data == 'dataset2.p' or train_data == 'dataset2_NR.p':
+        test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
+                          ' dataset3_NR.p) ')
     else:
         test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
-                          ' dataset3_NR.p, 5_hosts.p, Mamastrovirus.p, or Avastrovirus.p) ')
+                          ' dataset3_NR.p, Mamastrovirus.p, or Avastrovirus.p) ')
     if test_data == train_data:
         print('You selected the same dataset for training and testing.')
         test = train

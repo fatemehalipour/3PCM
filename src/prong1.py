@@ -50,6 +50,8 @@ def supervised_classification(train, test, k, cross_validation_flag, level):
                 dict_y_pred[accession_numbers[i]] = 'Astrovirus'
             if y_pred[i] == 1:
                 dict_y_pred[accession_numbers[i]] = 'Potyvirus'
+
+
     print('Prong 1 predictions:')
     print(dict_y_pred)
     print('--------------------------------------------------')
