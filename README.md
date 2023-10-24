@@ -18,3 +18,13 @@ The format of the dataset files is a list of 3-tuples (label, sequence, accessio
 <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/metadata_host.xlsx">metadata_host.xlsx</a> file.
 
 ---
+
+## Required packages/dependencies
+Please use `pip install (package name)` id needed
+* `biopython`
+* `sklearn`
+* `statistics`
+* `pandas`
+* `numpy`
+* `pathlib`
+* `itertools'
