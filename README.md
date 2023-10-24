@@ -27,4 +27,4 @@ Please use `pip install (package name)` id needed
 * `pandas`
 * `numpy`
 * `pathlib`
-* `itertools'
+* `itertools`
