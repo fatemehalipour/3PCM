@@ -20,7 +20,7 @@ The format of the dataset files is a list of 3-tuples (label, sequence, accessio
 ---
 
 ## Required packages/dependencies
-Please use `pip install (package name)` id needed
+Please use `pip install (package name)` if needed
 * `biopython`
 * `sklearn`
 * `statistics`
