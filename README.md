@@ -10,11 +10,11 @@ The source code of Prong 1 (supervised method), Prong 2 (unsupervised method), P
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/dataset2_NR.p">Dataset 2 (non-recombinant)</a>: Subset of Dataset 2 in which all sequences are not recombinants.
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/dataset3.p">Dataset 3</a>: Dataset consisting of unclassified astrovirus sequences with mammalian or avian hosts.
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/dataset3_NR.p">Dataset (non-recombinant)</a>: Subset of Dataset 3 in which all sequences are not recombinants.
-* <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/Avastrovirus.p">Avastrovirus</a>: All avastrovirus sequences (previously classified or classified by 3PCM), labelled as goose avastrovirus or non-goose avastrovirus. 
-* <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/Mamastrovirus.p">Mamastrovirus</a>: All mamastrovirus sequences (previously classified or classified by 3PCM), labelled as human mamastrovirus or non-human mamastrovirus.
+* <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/avastrovirus.p">Avastrovirus</a>: All avastrovirus sequences (previously classified or classified by 3PCM), labelled as goose avastrovirus or non-goose avastrovirus. 
+* <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/mamastrovirus.p">Mamastrovirus</a>: All mamastrovirus sequences (previously classified or classified by 3PCM), labelled as human mamastrovirus or non-human mamastrovirus.
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/5hosts.p">5 Hosts</a>: Dataset consisting of unclassified astrovirus sequences belonging to 5 main hosts (Reptilia, Mammalia, Aves, Amphibia, Actinopterygii).
 
 The format of the dataset files is a list of 3-tuples (label, sequence, accession id). The information about the host of astrovirus sequences used in this study can be found in
-<a href="https://github.com/fatemehalipour/3PCM/blob/main/data/metadata_host.xlsx">metadata.xlsx</a> file.
+<a href="https://github.com/fatemehalipour/3PCM/blob/main/data/metadata_host.xlsx">metadata_host.xlsx</a> file.
 
 ---
