@@ -39,12 +39,12 @@ def get_stats(li, dataset_name):
     print("-----------Statistics about " + dataset_name + ": ------------")
     print("# of samples: ", len(li))
     print("# of classes: ", len(data_distribution))
-    print('min seq length: ' + str(min(sequences_lengths)))
-    print('mean seq length: ' + str(int((sum(sequences_lengths) / len(sequences_lengths)))))
-    print('max seq length: ' + str(max(sequences_lengths)))
+    print("min seq length: " + str(min(sequences_lengths)))
+    print("mean seq length: " + str(int((sum(sequences_lengths) / len(sequences_lengths)))))
+    print("max seq length: " + str(max(sequences_lengths)))
     print("data distribution: ")
     for key, item in data_distribution.items():
-        print(f'{key:8} => {item:8}')
+        print(f"{key:8} => {item:8}")
     print("-------------------------------------------------")
 
     # label numerical assignment
@@ -59,11 +59,11 @@ def get_stats(li, dataset_name):
 
 # plot histogram of class occurrences
 def plot_data(d, path, title):
-    plt.bar(range(len(d)), d.values(), align='center', color='lightsteelblue', zorder=3, linestyle="-.")
+    plt.bar(range(len(d)), d.values(), align="center", color="lightsteelblue", zorder=3, linestyle="-.")
     plt.margins(0.05)
     plt.subplots_adjust(left=0.1, bottom=0.3, right=0.9, top=0.9)
     plt.xticks(range(len(d)), list(d.keys()))
-    plt.rcParams['axes.axisbelow'] = True
+    plt.rcParams["axes.axisbelow"] = True
     plt.xticks(rotation=90)
     plt.grid(True, zorder=0)
     plt.title(title)
@@ -80,8 +80,8 @@ def kmer_count(seq, k):
     """
     kmer_dict = {}
 
-    for k_mer in product('ACGU', repeat=k):
-        kmer = ''.join(k_mer)
+    for k_mer in product("ACGU", repeat=k):
+        kmer = "".join(k_mer)
         kmer_dict[kmer] = 0
 
     idx = 0
@@ -112,89 +112,88 @@ def feature_extraction(data, k):
 
         accession_numbers.append(data[i][2])
 
-    x = np.asarray(data_features).astype('float32')
+    x = np.asarray(data_features).astype("float32")
     y = np.asarray(data_labels)
     return x, y, accession_numbers
 
 
-def build_pipeline(classifier):
+def build_model(classifier):
     # setup normalizers if needed
     normalizers = []
 
     # Classifiers
     # 10-nearest-neighbors
-    if classifier == '10-nearest-neighbors':
-        normalizers.append(('classifier', neighbors.KNeighborsClassifier(n_neighbors=10, metric='euclidean')))
+    if classifier == "10-nearest-neighbors":
+        normalizers.append(("classifier", neighbors.KNeighborsClassifier(n_neighbors=10, metric="euclidean")))
 
     # nearest-centroid-mean
-    if classifier == 'nearest-centroid-mean':
-        normalizers.append(('classifier', neighbors.NearestCentroid(metric='euclidean')))
+    if classifier == "nearest-centroid-mean":
+        normalizers.append(("classifier", neighbors.NearestCentroid(metric="euclidean")))
 
     # nearest-centroid-median
-    if classifier == 'nearest-centroid-median':
-        normalizers.append(('classifier', neighbors.NearestCentroid(metric='manhattan')))
+    if classifier == "nearest-centroid-median":
+        normalizers.append(("classifier", neighbors.NearestCentroid(metric="manhattan")))
 
     # logistic-regression
-    if classifier == 'logistic-regression':
-        normalizers.append(('classifier', LogisticRegression()))
+    if classifier == "logistic-regression":
+        normalizers.append(("classifier", LogisticRegression()))
 
     # linear-svm
-    if classifier == 'linear-svm':
-        normalizers.append(('classifier', svm.SVC(kernel='linear', C=1)))
+    if classifier == "linear-svm":
+        normalizers.append(("classifier", svm.SVC(kernel="linear", C=1)))
 
     # quadratic-svm
-    if classifier == 'quadratic-svm':
-        normalizers.append(('classifier', svm.SVC(kernel='poly', degree=2)))
+    if classifier == "quadratic-svm":
+        normalizers.append(("classifier", svm.SVC(kernel="poly", degree=2)))
 
     # cubic-svm
-    if classifier == 'cubic-svm':
-        normalizers.append(('classifier', svm.SVC(kernel='poly', degree=3)))
+    if classifier == "cubic-svm":
+        normalizers.append(("classifier", svm.SVC(kernel="poly", degree=3)))
 
     # sgd
-    if classifier == 'sgd':
-        normalizers.append(('classifier', SGDClassifier(max_iter=5)))
+    if classifier == "sgd":
+        normalizers.append(("classifier", SGDClassifier(max_iter=5)))
 
     # decision-tree
-    if classifier == 'decision-tree':
-        normalizers.append(('classifier', DecisionTreeClassifier()))
+    if classifier == "decision-tree":
+        normalizers.append(("classifier", DecisionTreeClassifier()))
 
     # random-forest
-    if classifier == 'random-forest':
-        normalizers.append(('classifier', RandomForestClassifier(n_estimators=10)))
+    if classifier == "random-forest":
+        normalizers.append(("classifier", RandomForestClassifier(n_estimators=10)))
 
     # adaboost
-    if classifier == 'adaboost':
-        normalizers.append(('classifier', AdaBoostClassifier(n_estimators=50)))
+    if classifier == "adaboost":
+        normalizers.append(("classifier", AdaBoostClassifier(n_estimators=50)))
 
     # gaussian-naive-bayes
-    if classifier == 'gaussian-naive-bayes':
-        normalizers.append(('classifier', GaussianNB()))
+    if classifier == "gaussian-naive-bayes":
+        normalizers.append(("classifier", GaussianNB()))
 
     # lda
-    if classifier == 'lda':
-        normalizers.append(('classifier', discriminant_analysis.LinearDiscriminantAnalysis()))
+    if classifier == "lda":
+        normalizers.append(("classifier", discriminant_analysis.LinearDiscriminantAnalysis()))
 
     # qda
-    if classifier == 'qda':
-        normalizers.append(('classifier', discriminant_analysis.QuadraticDiscriminantAnalysis()))
+    if classifier == "qda":
+        normalizers.append(("classifier", discriminant_analysis.QuadraticDiscriminantAnalysis()))
 
     # multilayer-perceptron
-    if classifier == 'multilayer-perceptron':
-        normalizers.append(('classifier', MLPClassifier(solver='sgd')))
+    if classifier == "multilayer-perceptron":
+        normalizers.append(("classifier", MLPClassifier(solver="sgd")))
 
     return Pipeline(normalizers)
 
 
-def training(X, y, classifier):
+def train_step(X, y, classifier):
     # Run the classification Pipeline
-    pipeline = build_pipeline(classifier)
+    pipeline = build_model(classifier)
     pipeline.fit(X, y)
-
     return pipeline
 
 
-def testing(X_test, y_test, pipeline):
-    y_pred = pipeline.predict(X_test)
+def test_step(X_test, y_test, model):
+    y_pred = model.predict(X_test)
     return accuracy_score(y_test, y_pred)
 
 

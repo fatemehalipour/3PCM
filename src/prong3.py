@@ -1,42 +1,23 @@
 import pandas as pd
+from pathlib import Path
 
-
-def host_identification(test):
-    # Read xl file with labels
-    xl_file = pd.ExcelFile('data/metadata.xlsx')
-
+def host_identification(testing_data):
+    data_path = Path("data/")
+    xl_file = pd.ExcelFile(data_path / "metadata_host.xlsx")
     # extract different sheets in xl file
-    dfs = {sheet_name: xl_file.parse(sheet_name)
-           for sheet_name in xl_file.sheet_names}
-    df = dfs['1039 documents']
-
-    # extract list of column in the main sheet
-    columns = df.columns
-
-    # extract accession numbers and hosts information
-    ac_numbers = df.loc[:, columns[0]].tolist()
-    hosts_class = df.loc[:, columns[4]].tolist()
-    # hosts_family = df.loc[:, columns[3]].tolist()
-    host_species = df.loc[:, columns[2]].tolist()
-    host_class_dict = {}
-    host_species_dict = {}
-    for i in range(len(ac_numbers)):
-        host_class_dict[ac_numbers[i]] = hosts_class[i]
-        host_species_dict[ac_numbers[i]] = host_species[i]
-
-    # Extract accession IDs of the test set
-    accession_numbers = []
-    for i in range(len(test)):
-        accession_numbers.append(test[i][-1])
+    dfs = {sheet_name: xl_file.parse(sheet_name) for sheet_name in xl_file.sheet_names}
+    metadata_host_df = dfs["1039 documents"]
+    df = metadata_host_df.set_index(["Name"])
 
     dict_y_pred_class = {}
     dict_y_pred_species = {}
-    for i in range(len(accession_numbers)):
-        dict_y_pred_class[accession_numbers[i]] = host_class_dict[accession_numbers[i]]
-        dict_y_pred_species[accession_numbers[i]] = host_species_dict[accession_numbers[i]]
-    print('Host (class level):')
+    for label, seq, name in testing_data:
+        dict_y_pred_class[name] = df.loc[name, "Class"]
+        dict_y_pred_species[name] = df.loc[name, "Host"]
+
+    print("Host (class level):")
     print(dict_y_pred_class)
-    print('Host (species level):')
+    print("Host (species level):")
     print(dict_y_pred_species)
-    print('--------------------------------------------------')
+    print("--------------------------------------------------")
     return dict_y_pred_class, dict_y_pred_species

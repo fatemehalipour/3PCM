@@ -1,84 +1,98 @@
 import pickle
-
+from pathlib import Path
 from utilities import get_stats
 from prong1 import supervised_classification
-from prong2 import clustering
+from prong2 import unsupervised_clustering
 from prong3 import host_identification
 
+K = 6
+CLUSTER_COUNT = 2
+SUPERVISED_ALGORITHM = "linear-svm"
+UNSUPERVISED_ALGORITHM = "k-means++"
 
-def read_file(file_name):
-    data = pickle.load(open('data/' + file_name, "rb"))
-    labels_assignment, data_distribution = get_stats(data, file_name)
-    return data
+
+def extract_class_names(training_data_file):
+    if training_data_file in ["dataset1.p", "dataset2.p", "dataset2_NR.p", "dataset3.p", "dataset3_NR.p"]:
+        class_names = sorted(["Avastrovirus", "Mamastrovirus"])
+    elif training_data_file == "potyvirus.p":
+        class_names = sorted(["Astrovirus", "Potyvirus"])
+    elif training_data_file == "mamastrovirus.p":
+        class_names = sorted(["HAstV", "Non-HAstV Mamastroviurs"])
+    elif training_data_file == "avastrovirus.p":
+        class_names = sorted(["GoAstV", "Non-GoAstV Avastrovirus"])
+    return class_names
 
 
-if __name__ == '__main__':
-    # change the next line if you want to change the value of k in k-mers
-    k = 6
-    cross_validation_flag = False
+if __name__ == "__main__":
+    data_path = Path("data/")
 
-    # The input should be one of Prong 1, Prong 2, Prong 3, or All
-    prong = input('Please select the prong you want to run (e.g. Prong 1, Prong 2, Prong 3, or All) ')
+    # prong should be one of Prong 1, Prong 2, Prong 3, or All
+    prong = "All"
+    training_data_file = "dataset2.p"  # one of dataset1.p, dataset2.p, dataset2_NR.p, potyvirus.p, mamastrovirus.p, or avastrovirus.p
+    testing_data_file = "dataset3.p"
 
-    train_data = train = test = None
-    if prong != 'Prong 3':
-        train_data = input(
-            'Please select the training dataset (e.g. dataset1.p, dataset2.p, dataset2_NR.p, Potyvirus.p, Mamastrovirus.p, or Avastrovirus.p) ')
-        train = read_file(train_data)
+    if training_data_file in ["potyvirus.p", "mamastrovirus.p", "avastrovirus.p"]:
+        testing_data_file = training_data_file
+        print(f"{training_data_file} will be used as training and testing dataset.")
+    elif training_data_file == "dataset1.p":
+        prong = "Prong 3"
+        testing_data_file = testing_data_file
+        print(f"Prong 3 is the only prong applicable on {training_data_file}")
+    elif training_data_file in ["dataset2.p", "dataset2_NR.p"]:
+        if testing_data_file not in ["dataset2.p", "dataset2_NR.p", "dataset3.p", "dataset3_NR.p"]:
+            print("Please change the testing data.")
+            exit()
 
-    if train_data == 'Potyvirus.p' or train_data == 'Mamastrovirus.p' or train_data == 'Avastrovirus.p':
-        test_data = train_data
-        print(f"{test_data} will be used as training and testing dataset")
-    elif train_data == 'dataset1.p':
-        prong = 'Prong 3'
-        test_data = train_data
-        print("Prong 3 is the only prong applicable on dataset1.p")
-    elif train_data == 'dataset2.p' or train_data == 'dataset2_NR.p':
-        test_data = input('Please select the testing dataset (e.g. dataset2.p, dataset2_NR.p, dataset3.p,'
-                          ' dataset3_NR.p)')
+    train_data = pickle.load(open(data_path / training_data_file, "rb"))
+    get_stats(train_data, training_data_file)
 
-    if test_data == train_data:
-        print('You selected the same dataset for training and testing.')
-        test = train
-        cross_validation_flag = True
+    if testing_data_file == training_data_file:
+        test_data = None
     else:
-        test = read_file(test_data)
+        test_data = pickle.load(open(data_path / testing_data_file, "rb"))
+        get_stats(test_data, testing_data_file)
 
-    # set the level
-    if train_data == "dataset1.p" or train_data == "dataset2.p" or train_data == "dataset2_NR.p" or train_data == "dataset3.p" or train_data == "dataset3_NR.p":
-        level = "genus"
-    elif train_data == 'Potyvirus.p':
-        level = "family"
-    elif train_data == 'Mamastrovirus.p':
-        level = 'mamastrovirus'
-    elif train_data == 'Avastrovirus.p':
-        level = 'avastrovirus'
+    class_names = extract_class_names(training_data_file)
 
-    if prong == 'Prong 1':
-        supervised_classification(train, test, k, cross_validation_flag, level=level)
+    if prong == "Prong 1":
+        supervised_classification(training_data=train_data,
+                                  class_names=class_names,
+                                  testing_data=test_data,
+                                  k=K,
+                                  algorithm=SUPERVISED_ALGORITHM)
 
-    if prong == 'Prong 2':
-        clustering(train, test, k, level=level)
+    if prong == "Prong 2":
+        unsupervised_clustering(training_data=train_data,
+                                class_names=class_names,
+                                clusters_count=CLUSTER_COUNT,
+                                testing_data=test_data,
+                                k=K,
+                                algorithm=UNSUPERVISED_ALGORITHM)
 
-    if prong == 'Prong 3':
-        if test_data == 'Potyvirus.p':
-            print(f"Prong 3 is not applicable on {test_data}")
-            exit()
-        host_identification(test)
+    if prong == "Prong 3":
+        host_identification(testing_data=test_data)
 
-    if prong == 'All':
-        prong1_pred = supervised_classification(train, test, k, cross_validation_flag, level=level)
-        prong2_pred = clustering(train, test, k, level=level)
-        if test_data == 'Potyvirus.p':
-            print(f"Prong 3 is not applicable on {test_data}")
-        else:
-            if test_data == 'Mamastrovirus.p' or test_data == 'Avastrovirus.p':
-                blah, prong3_pred = host_identification(test)
+    if prong == "All":
+        prong1_pred = supervised_classification(training_data=train_data,
+                                                class_names=class_names,
+                                                testing_data=test_data,
+                                                k=K,
+                                                algorithm=SUPERVISED_ALGORITHM)
+        prong2_pred = unsupervised_clustering(training_data=train_data,
+                                              class_names=class_names,
+                                              clusters_count=CLUSTER_COUNT,
+                                              testing_data=test_data,
+                                              k=K,
+                                              algorithm=UNSUPERVISED_ALGORITHM)
+        prong3_pred = None
+        if testing_data_file != "potyvirus.p":
+            if training_data_file == "mamastrovirus.p" or training_data_file == "avastrovirus.p":
+                blah, prong3_pred = host_identification(testing_data=train_data)
             else:
-                prong3_pred, blah = host_identification(test)
-        print('Prediction of all prongs:')
-        print(prong1_pred)
+                prong3_pred, blah = host_identification(testing_data=test_data)
+        print("Predictions of all prongs:")
+        if prong1_pred:
+            print(prong1_pred)
         print(prong2_pred)
-        if test_data == 'Potyvirus.p':
-            exit()
-        print(prong3_pred)
+        if prong3_pred:
+            print(prong3_pred)
