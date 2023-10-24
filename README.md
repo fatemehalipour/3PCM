@@ -19,12 +19,13 @@ The format of the dataset files is a list of 3-tuples (label, sequence, accessio
 
 ---
 
-## Required packages/dependencies
-Please use `pip install (package name)` if needed
-* `biopython`
-* `sklearn`
-* `statistics`
-* `pandas`
-* `numpy`
-* `pathlib`
-* `itertools`
+## Required Dependencies
+* `python 3.x`
+Please use `pip install (package name)` for the following packages:
+* `Biopython`
+* `Sklearn`
+* `Statistics`
+* `Pandas`
+* `Numpy`
+* `Pathlib`
+* `Itertools`
