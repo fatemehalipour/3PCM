@@ -15,6 +15,6 @@ The source code of Prong 1 (supervised method), Prong 2 (unsupervised method), P
 * <a href="https://github.com/fatemehalipour/3PCM/blob/main/data/5hosts.p">5 Hosts</a>: Dataset consisting of unclassified astrovirus sequences belonging to 5 main hosts (Reptilia, Mammalia, Aves, Amphibia, Actinopterygii).
 
 The format of the dataset files is a list of 3-tuples (label, sequence, accession id). The information about the host of astrovirus sequences used in this study can be found in
-<a href="https://github.com/fatemehalipour/3PCM/blob/main/data/metadata.xlsx">metadata.xlsx</a> file.
+<a href="https://github.com/fatemehalipour/3PCM/blob/main/data/metadata_host.xlsx">metadata.xlsx</a> file.
 
 ---
